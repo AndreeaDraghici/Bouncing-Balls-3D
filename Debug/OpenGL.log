@@ -1,0 +1,12 @@
+﻿  Application.cpp
+D:\Data\Facultate\Anul4\Sem2\OpenGL\OpenGL\src\Application.cpp(37,20): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\Data\Facultate\Anul4\Sem2\OpenGL\OpenGL\src\Application.cpp(38,20): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\Data\Facultate\Anul4\Sem2\OpenGL\OpenGL\src\Application.cpp(45,28): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\Data\Facultate\Anul4\Sem2\OpenGL\OpenGL\src\Application.cpp(46,27): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\Data\Facultate\Anul4\Sem2\OpenGL\OpenGL\src\Application.cpp(75,21): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\Data\Facultate\Anul4\Sem2\OpenGL\OpenGL\src\Application.cpp(80,22): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\Data\Facultate\Anul4\Sem2\OpenGL\OpenGL\src\Application.cpp(85,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\Data\Facultate\Anul4\Sem2\OpenGL\OpenGL\src\Application.cpp(90,22): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+D:\Data\Facultate\Anul4\Sem2\OpenGL\OpenGL\src\Application.cpp(95,23): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(1096,5): error MSB6006: "link.exe" exited with code 1104.
+LINK : fatal error LNK1104: cannot open file 'freeglut.lib'
