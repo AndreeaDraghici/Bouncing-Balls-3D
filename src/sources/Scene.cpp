@@ -41,6 +41,40 @@ void Scene::display(void) {
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, matAmbient);
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, matDiffuse);
 
+    drawTrees();
+
+    drawPlanOfFloor();
+
+    drawWalls();
+
+    drawBalls();
+
+    glPopMatrix();
+
+    // schimbare buffer pentru a permite afisarea
+    glutSwapBuffers();
+}
+
+/* această funcție desenează bile în scena 3D. 
+Folosește glTranslatef pentru a muta centrul de desenare la locația specificată, iar glColor3f setează culoarea fiecărei bile. 
+glutSolidSphere este apelat pentru a crea bilele cu raza și detaliile specificate. */
+void Scene::drawBalls()
+{
+    // desenare bile
+    glTranslatef(7, ball.widthPlaneOfBall + 1.5, 4);
+    glColor3f(1, 0, 1);//galben
+    glutSolidSphere(1.9f, 50, 50);
+    glEnd();
+
+    glTranslatef(7, ball.widthPlaneOfBall + 1, 9);
+    glColor3f(1, 1, 1); // alb
+    glutSolidSphere(1.9f, 50, 50);
+    glEnd();
+}
+/* Funcția creează doi copaci în scena folosind generateTree, care este o funcție ce desenează un copac folosind cilindri pentru trunchi și sfere pentru coroană.
+glPushMatrix și glPopMatrix sunt folosite pentru a asigura că transformările aplicate unui copac nu afectează restul scenei. */
+void Scene::drawTrees()
+{
     glPushMatrix();
     glTranslatef(-20, 0, -15); // Poziția pentru primul pom
     // Pomul 1
@@ -52,7 +86,12 @@ void Scene::display(void) {
     glTranslatef(-20, 0, 15); // Poziția pentru al doilea pom
     generateTree(10.0, 5.0, 6.0);// increase trunkHeight to 10
     glPopMatrix();
+}
 
+/* aici este desenat planul solului, inițial ca un quad mare colorat în verde, folosind glBegin(GL_QUADS) și glEnd(). 
+Apoi, se adaugă detalii sub formă de triunghiuri verzi mai închise pentru a crea o textură/ un efect de denivelare pe sol. */
+void Scene::drawPlanOfFloor()
+{
     glBegin(GL_QUADS);
     glColor3f(0.0f, 1.0f, 0.0f); // seteaza culoarea planului la galben
     glVertex3f(-25, 0, -25);
@@ -78,7 +117,13 @@ void Scene::display(void) {
         }
     }
     glEnd();
+}
 
+/* desenează pereții încăperii folosind quads. 
+Fiecare perete este desenat separat, cu glColor3f setând culoarea la albastru. 
+Coordonatele sunt setate astfel încât pereții să înconjoare scena, creând un efect de încăpere sau cutie.*/
+void Scene::drawWalls()
+{
     // pereti
     glBegin(GL_QUADS);
     glColor3f(0.0f, 0.0f, 1.0f); // seteaza culoarea peretelui la albastru
@@ -100,33 +145,24 @@ void Scene::display(void) {
     glVertex3f(25, 25, 25);
     glVertex3f(-25, 25, 25);
     glEnd();
-
-    // desenare bile
-    glTranslatef(7, ball.widthPlaneOfBall + 1.5, 4);
-    glColor3f(1, 0, 1);//galben
-    glutSolidSphere(1.9f, 50, 50);
-    glEnd();
-
-    glTranslatef(7, ball.widthPlaneOfBall + 1, 9);
-    glColor3f(1, 1, 1); // alb
-    glutSolidSphere(1.9f, 50, 50);
-    glEnd();
-
-    glPopMatrix();
-
-    // schimbare buffer pentru a permite afisarea
-    glutSwapBuffers();
 }
 
+/* funcția reshape este apelată automat atunci când fereastra OpenGL este redimensionată. */
 void Scene::reshape(int width, int height) {
     if (height == 0) height = 1; // Prevenirea împărțirii la zero
     GLfloat aspect = (GLfloat)width / (GLfloat)height;
-
+    // setează viewportul folosind noile dimensiuni ale ferestrei, ceea ce înseamnă că zona de desenare OpenGL va acoperi întreaga fereastră.
     glViewport(0, 0, width, height);
-
+    // modul matricei este schimbat în GL_PROJECTION pentru a configura camera de proiecție, iar matricea de proiecție este resetată (glLoadIdentity()). 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
+
+    // gluPerspective este folosită pentru a seta camera de perspectivă, cu un unghi de vizualizare de 45 de grade și distanțe de tăiere apropiate și îndepărtate. 
     gluPerspective(45.0, aspect, 0.1, 100.0);
+
+    // matrice utilizată pentru a combina matricile de modelare și vizualizare. 
+    // Aceasta controlează modul în care obiectele 3D sunt poziționate, orientate și scalate într-o scenă, precum și poziția și orientarea camerei (sau a punctului de vedere). 
+    // Prin manipularea matricei GL_MODELVIEW, se pot crea efecte de mișcare sau de rotație pentru obiecte și se poate ajusta perspectiva camerei în scena 3D.
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
