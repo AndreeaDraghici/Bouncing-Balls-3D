@@ -30,9 +30,6 @@ public:
         widthPlaneOfBall(5.0), heightPlaneOfBall(8.5),
         ballDirection(true) {}
 
-    // Metoda updatePosition este folosită pentru a actualiza poziția bilei
-    // în funcție de logica specifică aplicației (de exemplu, mișcarea fizică).
-    void updatePosition();
 
     // Metoda draw este responsabilă pentru desenarea bilei în scena OpenGL.
     // Aceasta utilizează coordonatele bilei pentru a o plasa în scena 3D.

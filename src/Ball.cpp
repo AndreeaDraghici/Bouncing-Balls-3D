@@ -1,28 +1,6 @@
 ﻿#include "Ball.h"
 #include <GL/glut.h>
 
-// Metoda updatePosition este folosită pentru a actualiza poziția bilei.
-void Ball::updatePosition() {
-    // Actualizăm poziția bilei în funcție de direcția acesteia.
-    // Modificăm coordonatele X, Y și Z ale bilei.
-    if (ballDirection) {
-        ballPositionX += 0.1;
-        ballPositionY += 0.1;
-        ballPositionZ += 0.1;
-    }
-    else {
-        ballPositionX -= 0.1;
-        ballPositionY -= 0.1;
-        ballPositionZ -= 0.1;
-    }
-
-    // Verificăm dacă bila a atins limitele spațiului de mișcare.
-    // Dacă da, schimbăm direcția de mișcare a bilei.
-    if (ballPositionX > 10 || ballPositionX < -10) ballDirection = !ballDirection;
-    if (ballPositionY > 10 || ballPositionY < -10) ballDirection = !ballDirection;
-    if (ballPositionZ > 10 || ballPositionZ < -10) ballDirection = !ballDirection;
-}
-
 // Metoda draw este responsabilă pentru desenarea bilei.
 void Ball::draw() {
     // Salvăm starea matricei curente.

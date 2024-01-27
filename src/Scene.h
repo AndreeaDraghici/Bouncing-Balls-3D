@@ -41,6 +41,9 @@ public:
     // Metoda statică timer este un callback pentru funcționalitatea de timer în GLUT.
     // Aceasta este utilizată pentru a actualiza scena periodic.
     static void timer(int v);
+
+    //Metoda folosită pentru a genera vizual un copac într-o scenă 
+    void generateTree(double trunkHeight, double crownHeight, double radius);
 };
 
 #endif // SCENE_H
