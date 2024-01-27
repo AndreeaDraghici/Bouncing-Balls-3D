@@ -25,10 +25,6 @@ public:
         cameraMinimumX(-10.0f), cameraMaximumX(10.0f), cameraMinumumY(0.0f), cameraMaximumY(10.0f),
         cameraMinimumZ(-10.0f), cameraMaximumZ(10.0f) {}
 
-    // Metoda applyView este folosită pentru a aplica transformările necesare matricei de modelare și vizualizare
-    // în funcție de unghiurile și poziția curentă a camerei. Aceasta determină ceea ce va fi vizibil în scena 3D.
-    void applyView();
-
     // Metoda updateCameraPosition este folosită pentru a actualiza poziția camerei
     // în funcție de inputul primit (de exemplu, de la tastatură).
     // @param key Codul tastei apăsate, care indică modul în care trebuie actualizată poziția camerei.

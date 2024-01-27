@@ -1,19 +1,6 @@
 ﻿#include "Camera.h"
 #include <GL/glut.h>
 
-// Metoda applyView setează viziunea (perspectiva) camerei în scena 3D.
-void Camera::applyView() {
-    // Funcția gluLookAt definește poziția camerei, punctul către care privește camera
-    // și orientarea camerei (de exemplu, care parte este sus).
-    // Parametrii sunt (eyex, eyey, eyez, centerx, centery, centerz, upx, upy, upz).
-
-    // eyex, eyey, eyez - Poziția camerei în spațiu.
-    // În acest caz, poziția camerei este ajustată în funcție de unghiurile camerei.
-    gluLookAt(-10 + cameraAngleX, 9 + cameraAngleY, -10 + cameraAngleZ,
-        5, 5, 5, // Presupunem că poziția inițială a bilei este (5, 5, 5).
-        0, 1, 0); // Orientarea camerei, (0, 1, 0) înseamnă că Y este sus.
-}
-
 // Metoda updateCameraPosition actualizează unghiurile camerei în funcție de inputul de la tastatură.
 void Camera::updateCameraPosition(int key) {
     // Această metodă este chemată atunci când o tastă specială (de exemplu, săgeată) este apăsată.
