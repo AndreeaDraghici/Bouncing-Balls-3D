@@ -41,15 +41,27 @@ void Scene::display(void) {
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, matAmbient);
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, matDiffuse);
 
+    glPushMatrix();
+    glTranslatef(-20, 0, -15); // Poziția pentru primul pom
+    // Pomul 1
+    generateTree(10.0, 5.0, 6.0); // increase trunkHeight to 10
+    glPopMatrix();
+
+    // Pomul 2
+    glPushMatrix();
+    glTranslatef(-20, 0, 15); // Poziția pentru al doilea pom
+    generateTree(10.0, 5.0, 6.0);// increase trunkHeight to 10
+    glPopMatrix();
+
     glBegin(GL_QUADS);
-    glColor3f(0.0f, 0.0f, 1.0f); // seteaza culoarea planului la albastru
+    glColor3f(0.0f, 1.0f, 0.0f); // seteaza culoarea planului la galben
     glVertex3f(-25, 0, -25);
     glVertex3f(-25, 0, 25);
     glVertex3f(25, 0, 25);
     glVertex3f(25, 0, -25);
     glEnd();
 
-    glColor3f(0.0f, 1.0f, 1.0f); // seteaza culoarea planului la albastru deschis
+    glColor3f(0.2f, 0.5f, 0.0f); // seteaza culoarea planului la verde
     //desenare plan format din triunghiuri pentru a da senzatia de denivelare
     glBegin(GL_TRIANGLES);
     //pentru fiecare colt al triunghiului, coordonatele x și z sunt incrementate cu 0,5 pentru a desena triunghiuri mai mici in interiorul planului. 
@@ -69,7 +81,7 @@ void Scene::display(void) {
 
     // pereti
     glBegin(GL_QUADS);
-    glColor3f(1.0f, 0.0f, 0.0f); // seteaza culoarea peretelui
+    glColor3f(0.0f, 0.0f, 1.0f); // seteaza culoarea peretelui la albastru
     // valorile pentru peretele din dreapta sunt setate la -25 pentru a plasa peretele in spatele obiectelor existente in scena
     glVertex3f(-25, 0, -25);
     glVertex3f(-25, 25, -25);
@@ -119,7 +131,7 @@ void Scene::reshape(int width, int height) {
     glLoadIdentity();
 }
 
-
+/* această metodă este folosită pentru a actualiza poziția bilei pe axa verticală (Y) */
 void Scene::update() {
     // Actualizarea logicii pentru bouncing ball
     if (ball.ballDirection) {
@@ -138,6 +150,7 @@ void Scene::update() {
     glutPostRedisplay();
 }
 
+/* metoda ce se concentrează pe deplasarea bilei */
 void Scene::bouncing_balls() {
     /* verificam daca mingea atinge marginea de sus sau de jos a ecranului */
     if (ball.widthPlaneOfBall == 0 || ball.widthPlaneOfBall == ball.heightPlaneOfBall) {
@@ -165,4 +178,50 @@ void Scene::timer(int v) {
     //declanseaza o noua intrerupere de tip timer peste 16 milisecunde
     //apelare periodica a functiei timer pentru a ne asigura ca ecranul este actualiat la fiecare cadru de afisare, vizual fiind mai placut
     glutTimerFunc(16,  Scene::timer, 0);
+}
+
+//desenrare copac in scena
+void Scene::generateTree(double trunkHeight, double crownHeight, double radius)
+{
+
+    // Desenarea trunchiului
+    glColor3f(0.5, 0.35, 0.05);//Setează culoarea pentru desenarea trunchiului copacului. Culoarea aleasă este o nuanță de maro, 
+    //reprezentând culoarea trunchiului unui copac.
+
+    GLUquadricObj* trunk = gluNewQuadric();// Creează un nou obiect quadric, care poate fi folosit pentru a desena forme precum cilindre, sfere.
+
+    gluQuadricDrawStyle(trunk, GLU_FILL);//Setează stilul de desenare pentru obiectul quadric trunk la GLU_FILL, 
+    //ceea ce înseamnă că forma va fi umplută, nu doar un schelet.
+
+    gluQuadricNormals(trunk, GLU_SMOOTH);//Setează normalii pentru trunk pentru a fi GLU_SMOOTH, 
+    //asigurându-se că lumina va fi interpolată frumos pe suprafața sa, oferind un aspect mai realist.
+
+    glPushMatrix();// Salvează starea curentă a matricei de transformare (poziție, rotație, scalare).
+
+    glRotatef(-90, 1.0, 0.0, 0.0);//Rotirea sistemului de coordonate cu 90 de grade în jurul axei X pentru a poziționa 
+    //cilindrul vertical, deoarece gluCylinder îl creează pe orizontală implicit.
+
+    gluCylinder(trunk, radius / 2, radius / 4, trunkHeight, 20, 20);//Desenează un cilindru 
+    //care va reprezenta trunchiul copacului. Raza de sus a cilindrului este jumătate din raza de jos pentru a sugera conicitatea trunchiului.
+
+    glPopMatrix();//Restaurează starea matricei de transformare salvată anterior, revenind la starea inițială a sistemului de coordonate.
+
+
+    // Desenarea coroanei
+    glColor3f(0.0, 0.5, 0.0);//Schimbă culoarea pentru desenarea coroanei copacului în verde, reprezentând frunzișul.
+
+    GLUquadricObj* crown = gluNewQuadric();//Creează un nou obiect quadric pentru coroana copacului.
+
+    gluQuadricDrawStyle(crown, GLU_FILL);//Similar cu trunchiul, setează stilul de desenare la umplere pentru coroană.
+
+    gluQuadricNormals(crown, GLU_SMOOTH);//Similar cu trunchiul, setează stilul de desenare normalii la neted pentru coroană.
+    glPushMatrix();//Din nou, salvează starea matricei de transformare.
+
+    glTranslatef(0, trunkHeight + crownHeight, 0);//Translatarea coroanei în susul trunchiului, adăugând înălțimea trunchiului 
+    //la poziția coroanei pentru a o poziționa corect.
+
+    gluSphere(crown, radius, 20 * 2, 20);// Desenează o sferă care va reprezenta coroana copacului. 
+    //Sfera este centrata pe poziția calculată anterior, iar raza sferei este egală cu radius, oferind coroanei dimensiunea dorită.
+
+    glPopMatrix();//Restabilește starea matricei de transformare la cea salvată mai înainte, menținând modificările de poziție doar pentru coroană.
 }
