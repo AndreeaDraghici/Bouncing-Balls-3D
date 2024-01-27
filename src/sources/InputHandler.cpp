@@ -1,4 +1,4 @@
-﻿#include "InputHandler.h"
+﻿#include "../headers/InputHandler.h"
 #include <GL/glut.h> 
 
 // Metoda handleKeyboardInput gestionează inputul de la tastatura.

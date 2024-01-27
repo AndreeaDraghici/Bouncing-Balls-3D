@@ -1,4 +1,4 @@
-﻿#include "Ball.h"
+﻿#include "../headers/Ball.h"
 #include <GL/glut.h>
 
 // Metoda draw este responsabilă pentru desenarea bilei.
