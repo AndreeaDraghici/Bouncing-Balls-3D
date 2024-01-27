@@ -177,7 +177,7 @@ void Scene::timer(int v) {
 
     //declanseaza o noua intrerupere de tip timer peste 16 milisecunde
     //apelare periodica a functiei timer pentru a ne asigura ca ecranul este actualiat la fiecare cadru de afisare, vizual fiind mai placut
-    glutTimerFunc(16,  Scene::timer, 0);
+    glutTimerFunc(16, Scene::timer, 0);
 }
 
 //desenrare copac in scena
