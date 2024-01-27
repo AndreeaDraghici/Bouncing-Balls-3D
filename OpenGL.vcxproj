@@ -131,18 +131,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
-    <ClCompile Include="src\Ball.cpp" />
-    <ClCompile Include="src\Camera.cpp" />
-    <ClCompile Include="src\InputHandler.cpp" />
-    <ClCompile Include="src\Scene.cpp" />
-    <ClCompile Include="src\WindowManager.cpp" />
+    <ClCompile Include="src\sources\Ball.cpp" />
+    <ClCompile Include="src\sources\Camera.cpp" />
+    <ClCompile Include="src\sources\InputHandler.cpp" />
+    <ClCompile Include="src\sources\Scene.cpp" />
+    <ClCompile Include="src\sources\WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Ball.h" />
-    <ClInclude Include="src\Camera.h" />
-    <ClInclude Include="src\InputHandler.h" />
-    <ClInclude Include="src\Scene.h" />
-    <ClInclude Include="src\WindowManager.h" />
+    <ClInclude Include="src\headers\Ball.h" />
+    <ClInclude Include="src\headers\Camera.h" />
+    <ClInclude Include="src\headers\InputHandler.h" />
+    <ClInclude Include="src\headers\Scene.h" />
+    <ClInclude Include="src\headers\WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

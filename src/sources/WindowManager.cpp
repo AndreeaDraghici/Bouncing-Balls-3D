@@ -1,4 +1,4 @@
-﻿#include "WindowManager.h"
+﻿#include "../headers/WindowManager.h"
 #include <GL/glut.h>
 
 

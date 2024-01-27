@@ -1,4 +1,4 @@
-﻿#include "Camera.h"
+﻿#include "../headers/Camera.h"
 #include <GL/glut.h>
 
 // Metoda updateCameraPosition actualizează unghiurile camerei în funcție de inputul de la tastatură.

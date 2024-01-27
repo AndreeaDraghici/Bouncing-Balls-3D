@@ -1,7 +1,7 @@
 ﻿#include <GL/glut.h>
-#include "Scene.h"
-#include "InputHandler.h"
-#include "WindowManager.h"
+#include "../src/headers/Scene.h"
+#include "../src/headers/InputHandler.h"
+#include "../src/headers/WindowManager.h"
 
 // Crearea obiectelor pentru scena, managerul ferestrei și handlerul de input.
 Scene scene;

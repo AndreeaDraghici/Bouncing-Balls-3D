@@ -1,4 +1,4 @@
-﻿#include "Scene.h"
+﻿#include "../headers/Scene.h"
 #include <GL/glut.h>
 
 /* initializarea contextului OpenGL */
