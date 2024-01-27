@@ -27,6 +27,18 @@ public:
     // Metoda display este responsabilă pentru a desena și reda scena.
     void display();
 
+    // Această funcție desenează bile în scena 3D.
+    void drawBalls();
+
+    // Funcția creează doi copaci în scena folosind generateTree, care este o funcție ce desenează un copac folosind cilindri pentru trunchi și sfere pentru coroană. 
+    void drawTrees();
+
+    // Funcție pentru desenat planul solului.
+    void drawPlanOfFloor();
+
+    // Funcție pentur desenrarea pereților. 
+    void drawWalls();
+
     // Metoda reshape este apelată atunci când fereastra de afișare este redimensionată.
     // Ajustează viewport-ul și proiecția în funcție de noile dimensiuni.
     void reshape(int width, int height);
