@@ -24,11 +24,6 @@ public:
     Camera() : cameraAngleX(65.0f), cameraAngleY(10.5f), cameraAngleZ(30.0f),
         cameraMinimumX(-10.0f), cameraMaximumX(10.0f), cameraMinumumY(0.0f), cameraMaximumY(10.0f),
         cameraMinimumZ(-10.0f), cameraMaximumZ(10.0f) {}
-
-    // Metoda updateCameraPosition este folosită pentru a actualiza poziția camerei
-    // în funcție de inputul primit (de exemplu, de la tastatură).
-    // @param key Codul tastei apăsate, care indică modul în care trebuie actualizată poziția camerei.
-    void updateCameraPosition(int key);
 };
 
 #endif // CAMERA_H
