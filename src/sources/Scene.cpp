@@ -71,6 +71,7 @@ void Scene::drawBalls()
     glutSolidSphere(1.9f, 50, 50);
     glEnd();
 }
+
 /* Funcția creează doi copaci în scena folosind generateTree, care este o funcție ce desenează un copac folosind cilindri pentru trunchi și sfere pentru coroană.
 glPushMatrix și glPopMatrix sunt folosite pentru a asigura că transformările aplicate unui copac nu afectează restul scenei. */
 void Scene::drawTrees()
@@ -103,7 +104,7 @@ void Scene::drawPlanOfFloor()
     glColor3f(0.2f, 0.5f, 0.0f); // seteaza culoarea planului la verde
     //desenare plan format din triunghiuri pentru a da senzatia de denivelare
     glBegin(GL_TRIANGLES);
-    //pentru fiecare colt al triunghiului, coordonatele x și z sunt incrementate cu 0,5 pentru a desena triunghiuri mai mici in interiorul planului. 
+    //pentru fiecare colt al pătratului mic din grilă, coordonatele x și z sunt incrementate cu 0,5 pentru a desena triunghiuri mai mici in interiorul planului. 
     for (float x = -25; x < 25; x += 0.5) {
         for (float z = -25; z < 25; z += 0.5) {
 

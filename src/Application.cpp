@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
     glutInitWindowPosition(100, 100);
 
     // Creează fereastra cu titlul specificat.
-    glutCreateWindow("Bile Saltarete - OpenGL");
+    glutCreateWindow("Bile Saltarete - OpenGL - Draghici Andreea");
 
     // Inițializează contextul OpenGL.
     scene.initGL();
