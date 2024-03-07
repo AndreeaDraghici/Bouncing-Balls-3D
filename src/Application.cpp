@@ -3,69 +3,69 @@
 #include "../src/headers/InputHandler.h"
 #include "../src/headers/WindowManager.h"
 
-// Crearea obiectelor pentru scena, managerul ferestrei și handlerul de input.
+// Creating objects for the scene, window manager, and input handler.
 Scene scene;
 WindowManager windowManager(900, 600);
 InputHandler inputHandler(scene);
 
-// Funcția de callback pentru afișarea scenei.
-// Aceasta este chemată de fiecare dată când GLUT decide că scena trebuie redesenată.
+// Callback function for scene display.
+// This is called whenever GLUT determines that the scene needs to be redrawn.
 void displayCallback() {
-    scene.display(); // Afișează elementele scenei.
+    scene.display(); // Displays the elements of the scene.
 }
 
-// Funcția de callback pentru redimensionarea ferestrei.
-// Aceasta este apelată de GLUT atunci când fereastra este redimensionată.
+// Callback function for window resizing.
+// This is called by GLUT when the window is resized.
 void reshapeCallback(int width, int height) {
-    scene.reshape(width, height); // Ajustează scena în funcție de noile dimensiuni ale ferestrei.
+    scene.reshape(width, height); // Adjusts the scene based on the new window dimensions.
 }
 
-// Funcția de callback pentru actualizarea stării bilei.
-// Aceasta este apelată în mod repetat de GLUT.
+// Callback function for updating the state of the balls.
+// This is called repeatedly by GLUT.
 void bouncingBallsCallback() {
-    scene.bouncing_balls(); // Actualizează logica bilei care sare.
+    scene.bouncing_balls(); // Updates the logic for the bouncing ball.
 }
 
-// Funcția de callback pentru inputul de la tastatură.
-// Aceasta este apelată de GLUT atunci când o tastă este apăsată.
+// Callback function for keyboard input.
+// This is called by GLUT when a key is pressed.
 void keyboardCallback(unsigned char key, int x, int y) {
-    inputHandler.handleKeyboardInput(key, x, y); // Gestionează inputul de la tastatură.
+    inputHandler.handleKeyboardInput(key, x, y); // Handles keyboard input.
 }
 
-// Funcția de callback pentru tastele speciale (săgeți, funcții, etc.).
-// Aceasta este apelată de GLUT atunci când o tastă specială este apăsată.
+// Callback function for special keys (arrows, function keys, etc.).
+// This is called by GLUT when a special key is pressed.
 void specialInputCallback(int key, int x, int y) {
-    inputHandler.handleSpecialInput(key, x, y); // Gestionează inputul de la tastele speciale.
+    inputHandler.handleSpecialInput(key, x, y); // Handles input from special keys.
 }
 
-// Funcția principală: GLUT rulează ca o aplicație de consolă începând de la main().
+// Main function: GLUT runs as a console application starting from main().
 int main(int argc, char** argv) {
-    // Inițializează GLUT.
+    // Initializes GLUT.
     glutInit(&argc, argv);
 
-    // Setează modul de afișare (double buffering, RGBA color, depth test).
+    // Sets the display mode (double buffering, RGBA color, depth test).
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 
-    // Specifică dimensiunea inițială a ferestrei.
+    // Specifies the initial size of the window.
     glutInitWindowSize(windowManager.width, windowManager.height);
-    // Poziționează fereastra la coordonatele (100, 100) pe ecran.
+    // Positions the window at the coordinates (100, 100) on the screen.
     glutInitWindowPosition(100, 100);
 
-    // Creează fereastra cu titlul specificat.
-    glutCreateWindow("Bile Saltarete - OpenGL - Draghici Andreea");
+    // Creates the window with the specified title.
+    glutCreateWindow("Bouncing Balls - OpenGL - Draghici Andreea");
 
-    // Inițializează contextul OpenGL.
+    // Initializes the OpenGL context.
     scene.initGL();
 
-    // Setează funcțiile de callback pentru diferitele evenimente.
-    glutDisplayFunc(displayCallback); // Pentru afișarea scenei.
-    glutIdleFunc(bouncingBallsCallback); // Pentru actualizarea continuă a scenei.
-    glutReshapeFunc(reshapeCallback); // Pentru redimensionarea ferestrei.
-    glutKeyboardFunc(keyboardCallback); // Pentru inputul de la tastatură.
-    glutSpecialFunc(specialInputCallback); // Pentru tastele speciale.
+    // Sets callback functions for different events.
+    glutDisplayFunc(displayCallback); // For displaying the scene.
+    glutIdleFunc(bouncingBallsCallback); // For continuous scene update.
+    glutReshapeFunc(reshapeCallback); // For window resizing.
+    glutKeyboardFunc(keyboardCallback); // For keyboard input.
+    glutSpecialFunc(specialInputCallback); // For special keys.
 
-    // Intră în bucla principală GLUT și începe procesarea evenimentelor.
+    // Enters the GLUT main loop and starts processing events.
     glutMainLoop();
 
-    return 0; 
+    return 0;
 }

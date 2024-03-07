@@ -1,34 +1,34 @@
-﻿// Pragma once este o directivă non-standard, dar larg acceptată,
-// care asigură includerea unică a conținutului fișierului header.
+﻿// Pragma once is a non-standard but widely accepted directive
+// that ensures the unique inclusion of this header file's content.
 #pragma once
 
-// Include guards previn includerea multiplă a aceluiași header
-// într-un singur fișier de compilare.
+// Include guards prevent the multiple inclusion of the same header
+// in a single compilation file.
 #ifndef WINDOW_MANAGER_H
 #define WINDOW_MANAGER_H
 
-// Clasa WindowManager este responsabilă pentru gestionarea ferestrei grafice.
-// Acesta oferă funcționalități pentru setarea dimensiunii ferestrei și
-// reconfigurarea acesteia atunci când este redimensionată.
+// The WindowManager class is responsible for managing the graphical window.
+// It provides functionalities for setting the window size and
+// reconfiguring it when resized.
 class WindowManager {
 public:
 
-    // Variabile membru pentru a stoca dimensiunile actuale ale ferestrei grafice.
-    // Acestea sunt inițializate cu valori implicite de 900x600.
+    // Member variables to store the current dimensions of the graphical window.
+    // These are initialized with default values of 900x600.
     int width, height;
 
-    // Constructorul clasei WindowManager, care permite inițializarea
-    // dimensiunilor ferestrei cu valori specificate.
-    // @param w Lățimea ferestrei.
-    // @param h Înălțimea ferestrei.
+    // Constructor for the WindowManager class, which allows the initialization
+    // of the window's dimensions with specified values.
+    // @param w The width of the window.
+    // @param h The height of the window.
     WindowManager(int w, int h) : width(w), height(h) {}
 
 
-    // Metoda reshapeWindow este chemată pentru a actualiza viewport-ul OpenGL
-    // atunci când fereastra este redimensionată.
-    // @param width Noua lățime a ferestrei.
-    // @param height Noua înălțime a ferestrei.
+    // The reshapeWindow method is called to update the OpenGL viewport
+    // when the window is resized.
+    // @param width The new width of the window.
+    // @param height The new height of the window.
     void reshapeWindow(int width, int height);
 };
 
-#endif
+#endif // WINDOW_MANAGER_H

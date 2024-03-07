@@ -1,38 +1,38 @@
-﻿// Pragma once este o directivă non-standard, dar larg acceptată,
-// care asigură includerea unică a acestui fișier header.
+﻿// Pragma once is a non-standard but widely accepted directive
+// that ensures this header file is included only once.
 #pragma once
 
-// Include guards previn includerea multiplă a acestui fișier header
-// într-un singur fișier de compilare.
+// Include guards prevent multiple inclusions of this header file
+// in a single compilation file.
 #ifndef BALL_H
 #define BALL_H
 
-// Clasa Ball este responsabilă pentru gestionarea stării și a reprezentării grafice
-// a unei bile într-un mediu 3D.
+// The Ball class is responsible for managing the state and graphical representation
+// of a ball in a 3D environment.
 class Ball {
 public:
-    // Variabile pentru reprezentarea poziției bilei în spațiu.
-    // Acestea indică locația curentă a bilei în coordonatele XYZ.
+    // Variables for representing the ball's position in space.
+    // These indicate the current location of the ball in XYZ coordinates.
     double ballPositionX, ballPositionY, ballPositionZ;
 
-    // Variabile pentru reprezentarea dimensiunii "planului" pe care se află bila.
-    // Acestea pot fi folosite pentru a determina limitele mișcării bilei.
+    // Variables for representing the dimensions of the "plane" on which the ball resides.
+    // These can be used to determine the limits of the ball's movement.
     double widthPlaneOfBall, heightPlaneOfBall;
 
-    // Variabilă de tip bool care indică direcția de mișcare a bilei.
-    // De exemplu, poate indica dacă bila se mișcă în sus sau în jos.
+    // A boolean variable that indicates the direction of the ball's movement.
+    // For example, it can indicate whether the ball is moving up or down.
     bool ballDirection;
 
-    // Constructorul clasei Ball.
-    // Inițializează poziția bilei și dimensiunile planului pe care se află, 
-    // precum și direcția inițială a mișcării.
+    // The constructor for the Ball class.
+    // Initializes the ball's position and the dimensions of the plane it resides on,
+    // as well as the initial direction of movement.
     Ball() : ballPositionX(5.0), ballPositionY(5.0), ballPositionZ(5.0),
         widthPlaneOfBall(5.0), heightPlaneOfBall(8.5),
         ballDirection(true) {}
 
 
-    // Metoda draw este responsabilă pentru desenarea bilei în scena OpenGL.
-    // Aceasta utilizează coordonatele bilei pentru a o plasa în scena 3D.
+    // The draw method is responsible for drawing the ball in the OpenGL scene.
+    // It uses the ball's coordinates to place it in the 3D scene.
     void draw();
 };
 

@@ -1,60 +1,60 @@
-﻿// Pragma once este o directivă non-standard, dar larg acceptată,
-// care asigură includerea unică a conținutului acestui fișier header.
+﻿// Pragma once is a non-standard but widely accepted directive
+// that ensures this header file's content is included only once.
 #pragma once
 
-// Include guards previn includerea multiplă a acestui fișier header
-// într-un singur fișier de compilare.
+// Include guards prevent multiple inclusions of this header file
+// in a single compilation file.
 #ifndef SCENE_H
 #define SCENE_H
 
-// Includem header-ele pentru clasele Camera și Ball.
+// Include headers for the Camera and Ball classes.
 #include "Camera.h"
 #include "Ball.h"
 
-// Clasa Scene reprezintă scena principală pentru aplicația noastră OpenGL.
-// Ea include obiecte pentru camera și bila, și metode pentru a gestiona scena.
+// The Scene class represents the main scene for our OpenGL application.
+// It includes objects for the camera and ball, and methods to manage the scene.
 class Scene {
 public:
-    // Obiect Camera pentru a gestiona poziționarea și orientarea camerei în scena 3D.
+    // Camera object to manage the positioning and orientation of the camera in the 3D scene.
     Camera camera;
 
-    // Obiect Ball care reprezintă bila care se deplasează în cadrul scenei.
+    // Ball object representing the ball that moves within the scene.
     Ball ball;
 
-    // Metoda initGL este folosită pentru a inițializa starea și setările OpenGL.
+    // The initGL method is used to initialize the state and settings of OpenGL.
     void initGL();
 
-    // Metoda display este responsabilă pentru a desena și reda scena.
+    // The display method is responsible for drawing and rendering the scene.
     void display();
 
-    // Această funcție desenează bile în scena 3D.
+    // This function draws balls in the 3D scene.
     void drawBalls();
 
-    // Funcția creează doi copaci în scena folosind generateTree, care este o funcție ce desenează un copac folosind cilindri pentru trunchi și sfere pentru coroană. 
+    // The function creates two trees in the scene using generateTree, which is a function that draws a tree using cylinders for the trunk and spheres for the crown. 
     void drawTrees();
 
-    // Funcție pentru desenat planul solului.
+    // Function for drawing the ground plane.
     void drawPlanOfFloor();
 
-    // Funcție pentur desenrarea pereților. 
+    // Function for drawing walls.
     void drawWalls();
 
-    // Metoda reshape este apelată atunci când fereastra de afișare este redimensionată.
-    // Ajustează viewport-ul și proiecția în funcție de noile dimensiuni.
+    // The reshape method is called when the display window is resized.
+    // It adjusts the viewport and projection according to the new dimensions.
     void reshape(int width, int height);
 
-    // Metoda update este utilizată pentru a actualiza starea scenei,
-    // de exemplu, pozițiile obiectelor, înainte de redare.
+    // The update method is used to update the state of the scene,
+    // for example, the positions of objects, before rendering.
     void update();
 
-    // Metoda bouncing_balls conține logica specifică pentru mișcarea bilei în scena.
+    // The bouncing_balls method contains specific logic for the ball's movement in the scene.
     void bouncing_balls();
 
-    // Metoda statică timer este un callback pentru funcționalitatea de timer în GLUT.
-    // Aceasta este utilizată pentru a actualiza scena periodic.
+    // The static timer method is a callback for timer functionality in GLUT.
+    // It is used to periodically update the scene.
     static void timer(int v);
 
-    //Metoda folosită pentru a genera vizual un copac într-o scenă 
+    // Method used to visually generate a tree in a scene.
     void generateTree(double trunkHeight, double crownHeight, double radius);
 };
 

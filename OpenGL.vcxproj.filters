@@ -18,9 +18,6 @@
     <ClCompile Include="src\sources\Ball.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\sources\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\sources\InputHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

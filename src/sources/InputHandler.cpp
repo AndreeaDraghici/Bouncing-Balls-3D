@@ -1,69 +1,69 @@
 ﻿#include "../headers/InputHandler.h"
-#include <GL/glut.h> 
+#include <GL/glut.h>
 
-// Metoda handleKeyboardInput gestionează inputul de la tastatura.
+// The handleKeyboardInput method manages input from the keyboard.
 void InputHandler::handleKeyboardInput(unsigned char key, int x, int y) {
-    // Switch pe baza codului tastei apăsate.
+    // Switch based on the pressed key code.
     switch (key) {
-    case 27: // Tasta Escape
-        exit(0); // Închide programul când este apăsată tasta ESC.
+    case 27: // Escape key
+        exit(0); // Exits the program when ESC key is pressed.
         break;
-    case 'a': // Mișcă spre stânga
-        scene.ball.ballPositionX += 0.8; // Incrementează poziția bilei pe axa X.
+    case 'a': // Move left
+        scene.ball.ballPositionX -= 0.8; // Decrements the ball's position on the X axis.
         break;
-    case 'd': // Mișcă spre dreapta
-        scene.ball.ballPositionX -= 0.3; // Decrementează poziția bilei pe axa X.
+    case 'd': // Move right
+        scene.ball.ballPositionX += 0.8; // Increments the ball's position on the X axis.
         break;
-    case 'w': // Mișcă în sus
-        scene.ball.ballPositionY += 0.3; // Incrementează poziția bilei pe axa Y.
+    case 'w': // Move up
+        scene.ball.ballPositionY += 0.8; // Increments the ball's position on the Y axis.
         break;
-    case 's': // Mișcă în jos
-        scene.ball.ballPositionY -= 0.3; // Decrementează poziția bilei pe axa Y.
+    case 's': // Move down
+        scene.ball.ballPositionY -= 0.8; // Decrements the ball's position on the Y axis.
         break;
-    case 'q': // Mișcă înainte
-        scene.ball.ballPositionZ += 0.8; // Incrementează poziția bilei pe axa Z.
+    case 'q': // Move forward
+        scene.ball.ballPositionZ -= 0.8; // Decrements the ball's position on the Z axis.
         break;
-    case 'e': // Mișcă înapoi
-        scene.ball.ballPositionZ -= 0.8; // Decrementează poziția bilei pe axa Z.
+    case 'e': // Move backward
+        scene.ball.ballPositionZ += 0.8; // Increments the ball's position on the Z axis.
         break;
     }
 
-    // Actualizează scena pentru a reflecta noile poziții ale bilei.
+    // Refreshes the scene to reflect the new positions of the ball.
     scene.update();
 }
 
-// Metoda handleSpecialInput gestionează inputul de la tastele speciale (săgeți).
+// The handleSpecialInput method manages input from special keys (e.g., arrow keys).
 void InputHandler::handleSpecialInput(int key, int x, int y) {
-    // Switch pe baza codului tastei speciale apăsate.
+    // Switch based on the pressed special key code.
     switch (key) {
     case GLUT_KEY_UP:
-        // Decrementează unghiul camerei pe axa X.
+        // Decrease camera angle on the X axis.
         scene.camera.cameraAngleX -= 0.8f;
-        // Asigură că unghiul nu depășește limita minimă.
+        // Ensure the angle does not go below the minimum limit.
         if (scene.camera.cameraAngleX < scene.camera.cameraMinimumX) {
             scene.camera.cameraAngleX = scene.camera.cameraMinimumX;
         }
         break;
     case GLUT_KEY_DOWN:
-        // Incrementează unghiul camerei pe axa X.
+        // Increase camera angle on the X axis.
         scene.camera.cameraAngleX += 0.8f;
-        // Asigură că unghiul nu depășește limita maximă.
+        // Ensure the angle does not exceed the maximum limit.
         if (scene.camera.cameraAngleX > scene.camera.cameraMaximumX) {
             scene.camera.cameraAngleX = scene.camera.cameraMaximumX;
         }
         break;
     case GLUT_KEY_LEFT:
-        // Decrementează unghiul camerei pe axa Y.
+        // Decrease camera angle on the Y axis.
         scene.camera.cameraAngleY -= 0.8f;
-        // Asigură că unghiul nu depășește limita minimă.
+        // Ensure the angle does not go below the minimum limit.
         if (scene.camera.cameraAngleY < scene.camera.cameraMinumumY) {
             scene.camera.cameraAngleY = scene.camera.cameraMinumumY;
         }
         break;
     case GLUT_KEY_RIGHT:
-        // Incrementează unghiul camerei pe axa Y.
+        // Increase camera angle on the Y axis.
         scene.camera.cameraAngleY += 0.8f;
-        // Asigură că unghiul nu depășește limita maximă.
+        // Ensure the angle does not exceed the maximum limit.
         if (scene.camera.cameraAngleY > scene.camera.cameraMaximumY) {
             scene.camera.cameraAngleY = scene.camera.cameraMaximumY;
         }
@@ -72,6 +72,6 @@ void InputHandler::handleSpecialInput(int key, int x, int y) {
         break;
     }
 
-    // Actualizează scena pentru a reflecta noile unghiuri ale camerei.
+    // Refreshes the scene to reflect the new angles of the camera.
     scene.update();
 }

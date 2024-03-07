@@ -1,26 +1,26 @@
-﻿// Pragma once este o directivă non-standard, dar larg acceptată,
-// care asigură includerea unică a acestui fișier header.
+﻿// Pragma once is a non-standard but widely accepted directive
+// that ensures this header file is included only once.
 #pragma once
 
-// Include guards previn includerea multiplă a acestui fișier header
-// într-un singur fișier de compilare.
+// Include guards prevent multiple inclusions of this header file
+// in a single compilation file.
 #ifndef CAMERA_H
 #define CAMERA_H
 
-// Clasa Camera este responsabilă pentru gestionarea poziției și orientării
-// camerei într-un mediu 3D.
+// The Camera class is responsible for managing the position and orientation
+// of the camera in a 3D environment.
 class Camera {
 public:
-    // Variabile pentru reprezentarea unghiurilor camerei într-un sistem de coordonate 3D.
-    // Aceste unghiuri determină direcția în care camera este orientată.
+    // Variables for representing the camera's angles in a 3D coordinate system.
+    // These angles determine the direction in which the camera is facing.
     float cameraAngleX, cameraAngleY, cameraAngleZ;
 
-    // Variabile pentru aplicarea unor limite minimale și maxime ale mișcării camerei.
-    // Aceste limite previn deplasarea camerei în afara unor anumite zone.
+    // Variables for applying minimum and maximum movement limits of the camera.
+    // These limits prevent the camera from moving outside certain areas.
     float cameraMinimumX, cameraMaximumX, cameraMinumumY, cameraMaximumY, cameraMinimumZ, cameraMaximumZ;
 
-    // Constructorul clasei Camera.
-    // Inițializează unghiurile camerei și limitele de mișcare la valori implicite.
+    // The constructor of the Camera class.
+    // Initializes the camera's angles and movement limits to default values.
     Camera() : cameraAngleX(65.0f), cameraAngleY(10.5f), cameraAngleZ(30.0f),
         cameraMinimumX(-10.0f), cameraMaximumX(10.0f), cameraMinumumY(0.0f), cameraMaximumY(10.0f),
         cameraMinimumZ(-10.0f), cameraMaximumZ(10.0f) {}
