@@ -1,26 +1,26 @@
 ﻿#include "../headers/Ball.h"
 #include <GL/glut.h>
 
-// Metoda draw este responsabilă pentru desenarea bilei.
+// The draw method is responsible for drawing the ball.
 void Ball::draw() {
-    // Salvăm starea matricei curente.
-    // Acest lucru este necesar pentru a nu afecta alte obiecte din scena cu transformările aplicate bilei.
+    // Save the current matrix state.
+    // This is necessary to avoid affecting other objects in the scene with the transformations applied to the ball.
     glPushMatrix();
 
-    // Mutăm bila în noua poziție.
-    // Translația este aplicată în conformitate cu coordonatele actuale ale bilei.
+    // Move the ball to its new position.
+    // The translation is applied according to the ball's current coordinates.
     glTranslatef(ballPositionX, ballPositionY, ballPositionZ);
 
-    // Setăm culoarea bilei.
-    // În acest caz, bila va fi roșie.
+    // Set the color of the ball.
+    // In this case, the ball will be red.
     glColor3f(1.0f, 0.0f, 0.0f); // RGB Color: Red
 
-    // Desenăm bila folosind o sferă solidă.
-    // Prima valoare este raza sferei, iar următoarele două valori sunt numărul de segmente
-    // utilizate pentru a desena sfera (latitudine și longitudine).
+    // Draw the ball using a solid sphere.
+    // The first value is the radius of the sphere, and the next two values are the number of segments
+    // used to draw the sphere (latitude and longitude).
     glutSolidSphere(0.5f, 20, 20);
 
-    // Restaurăm starea matricei la cea salvată anterior cu glPushMatrix.
-    // Acest lucru asigură că transformările aplicate bilei nu influențează alte părți ale scenei.
+    // Restore the matrix state to what it was before with glPushMatrix.
+    // This ensures that the transformations applied to the ball do not affect other parts of the scene.
     glPopMatrix();
 }

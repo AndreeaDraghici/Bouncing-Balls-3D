@@ -1,41 +1,41 @@
 ﻿#include "../headers/Scene.h"
 #include <GL/glut.h>
 
-/* initializarea contextului OpenGL */
+/* OpenGL context initialization */
 void Scene::initGL() {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Setează culoarea de fundal la negru
-    glShadeModel(GL_SMOOTH); // Setează modul de shading la smooth
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Sets the background color to black
+    glShadeModel(GL_SMOOTH); // Sets shading mode to smooth
 
-    glEnable(GL_DEPTH_TEST); // Activează testul de adâncime
-    glEnable(GL_LIGHTING); // Activează iluminarea
-    glEnable(GL_LIGHT0); // Activează sursa de lumină 0
+    glEnable(GL_DEPTH_TEST); // Enables depth testing
+    glEnable(GL_LIGHTING); // Enables lighting
+    glEnable(GL_LIGHT0); // Enables light source 0
 
-    GLfloat lightPosition[] = { 0.0f, 10.0f, 0.0f, 1.0f }; // Setează poziția sursei de lumină
+    GLfloat lightPosition[] = { 0.0f, 10.0f, 0.0f, 1.0f }; // Sets the light source position
     glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
 
-    glEnable(GL_COLOR_MATERIAL); // Activează urmărirea culorii pentru materiale
+    glEnable(GL_COLOR_MATERIAL); // Enables color tracking for materials
     glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 }
 
-/* functie de afisare a obiectelor in fereastra */
+/* Object rendering function */
 void Scene::display(void) {
-    // se curata buffer-ul de culoare 
+    // Clears the color buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // seteaza matricea de modelare si vizualizare 
-    glMatrixMode(GL_MODELVIEW);//seteaza modul de transformare al matericei
-    glLoadIdentity();//resetare matrice curenta la matricea identitate
+    // Sets the modeling and viewing matrix
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 
-    // folosita pentru a defini pozitia camerei cu ajutorul parametrilor de distanta , unghi de vedere si pozitia obiectului
+    // Sets the camera position using distance parameters, viewing angle, and object position
     gluLookAt(-10 + camera.cameraAngleX, 9 + camera.cameraAngleY, -10 + camera.cameraAngleZ,
         ball.ballPositionX, ball.ballPositionY, ball.ballPositionZ,
-        0, 6, 0);
+        0, 1, 0);
 
-    // Enable blending for the walls
+    // Enables blending for walls
     glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); //specifica modul de amestecare intre pixelii suprapusi.
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-    // seteaza proprietatile pentru material
+    // Sets material properties
     GLfloat matAmbient[] = { 1.0f, 1.0f, 1.0f, 1.0f };
     GLfloat matDiffuse[] = { 1.0f, 1.0f, 1.0f, 1.0f };
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, matAmbient);
@@ -49,66 +49,59 @@ void Scene::display(void) {
 
     drawBalls();
 
-    glPopMatrix();
-
-    // schimbare buffer pentru a permite afisarea
+    // Swaps buffers to display the rendered image
     glutSwapBuffers();
 }
 
-/* această funcție desenează bile în scena 3D. 
-Folosește glTranslatef pentru a muta centrul de desenare la locația specificată, iar glColor3f setează culoarea fiecărei bile. 
-glutSolidSphere este apelat pentru a crea bilele cu raza și detaliile specificate. */
-void Scene::drawBalls()
-{
-    // desenare bile
+/* This function draws balls in the 3D scene using translation to move to the specified location and glColor3f to set the color of each ball.
+glutSolidSphere is used to create the balls with the specified radius and level of detail. */
+void Scene::drawBalls() {
+    // Drawing balls
+    glPushMatrix(); // Corrected by adding glPushMatrix to ensure transformations don't affect subsequent objects
     glTranslatef(7, ball.widthPlaneOfBall + 1.5, 4);
-    glColor3f(1, 0, 1);//galben
+    glColor3f(1, 0, 1); // Purple
     glutSolidSphere(1.9f, 50, 50);
-    glEnd();
+    glPopMatrix(); // Added glPopMatrix here
 
+    glPushMatrix(); // Corrected by adding glPushMatrix
     glTranslatef(7, ball.widthPlaneOfBall + 1, 9);
-    glColor3f(1, 1, 1); // alb
+    glColor3f(1, 1, 1); // White
     glutSolidSphere(1.9f, 50, 50);
-    glEnd();
+    glPopMatrix(); // Added glPopMatrix here
 }
 
-/* Funcția creează doi copaci în scena folosind generateTree, care este o funcție ce desenează un copac folosind cilindri pentru trunchi și sfere pentru coroană.
-glPushMatrix și glPopMatrix sunt folosite pentru a asigura că transformările aplicate unui copac nu afectează restul scenei. */
-void Scene::drawTrees()
-{
+/* The function creates two trees in the scene using generateTree, which draws a tree using cylinders for the trunk and spheres for the crown.
+glPushMatrix and glPopMatrix are used to ensure that transformations applied to one tree do not affect the rest of the scene. */
+void Scene::drawTrees() {
     glPushMatrix();
-    glTranslatef(-20, 0, -15); // Poziția pentru primul pom
-    // Pomul 1
-    generateTree(10.0, 5.0, 6.0); // increase trunkHeight to 10
+    glTranslatef(-20, 0, -15); // Position for the first tree
+    generateTree(10.0, 5.0, 6.0); // Trunk height increased to 10
     glPopMatrix();
 
-    // Pomul 2
     glPushMatrix();
-    glTranslatef(-20, 0, 15); // Poziția pentru al doilea pom
-    generateTree(10.0, 5.0, 6.0);// increase trunkHeight to 10
+    glTranslatef(-20, 0, 15); // Position for the second tree
+    generateTree(10.0, 5.0, 6.0); // Trunk height increased to 10
     glPopMatrix();
 }
 
-/* aici este desenat planul solului, inițial ca un quad mare colorat în verde, folosind glBegin(GL_QUADS) și glEnd(). 
-Apoi, se adaugă detalii sub formă de triunghiuri verzi mai închise pentru a crea o textură/ un efect de denivelare pe sol. */
-void Scene::drawPlanOfFloor()
-{
+/* The ground plane is initially drawn as a large green-colored quad using glBegin(GL_QUADS) and glEnd().
+Then, details are added in the form of darker green triangles to create a texture or an effect of uneven ground. */
+void Scene::drawPlanOfFloor() {
     glBegin(GL_QUADS);
-    glColor3f(0.0f, 1.0f, 0.0f); // seteaza culoarea planului la galben
+    glColor3f(0.0f, 1.0f, 0.0f); // Sets the plane color to green
     glVertex3f(-25, 0, -25);
     glVertex3f(-25, 0, 25);
     glVertex3f(25, 0, 25);
     glVertex3f(25, 0, -25);
     glEnd();
 
-    glColor3f(0.2f, 0.5f, 0.0f); // seteaza culoarea planului la verde
-    //desenare plan format din triunghiuri pentru a da senzatia de denivelare
+    // Adds texture by drawing darker green triangles for an uneven ground effect
+    glColor3f(0.2f, 0.5f, 0.0f); // Sets the triangles color to a darker green
     glBegin(GL_TRIANGLES);
-    //pentru fiecare colt al pătratului mic din grilă, coordonatele x și z sunt incrementate cu 0,5 pentru a desena triunghiuri mai mici in interiorul planului. 
+    // Triangles are drawn by incrementing x and z coordinates within the plane to create a detailed texture
     for (float x = -25; x < 25; x += 0.5) {
         for (float z = -25; z < 25; z += 0.5) {
-
-            glVertex3f(x, 0, z); // este apelata pentru a specifica coordonatele fiecarui varf al triunghiului
+            glVertex3f(x, 0, z);
             glVertex3f(x + 0.5, 0, z);
             glVertex3f(x, 0, z + 0.5);
 
@@ -120,27 +113,22 @@ void Scene::drawPlanOfFloor()
     glEnd();
 }
 
-/* desenează pereții încăperii folosind quads. 
-Fiecare perete este desenat separat, cu glColor3f setând culoarea la albastru. 
-Coordonatele sunt setate astfel încât pereții să înconjoare scena, creând un efect de încăpere sau cutie.*/
-void Scene::drawWalls()
-{
-    // pereti
+/* Draws the room's walls using quads. Each wall is drawn separately, with glColor3f setting the color to blue.
+Coordinates are set so the walls enclose the scene, creating a room or box effect. */
+void Scene::drawWalls() {
     glBegin(GL_QUADS);
-    glColor3f(0.0f, 0.0f, 1.0f); // seteaza culoarea peretelui la albastru
-    // valorile pentru peretele din dreapta sunt setate la -25 pentru a plasa peretele in spatele obiectelor existente in scena
+    glColor3f(0.0f, 0.0f, 1.0f); // Sets the wall color to blue
+    // Right wall
     glVertex3f(-25, 0, -25);
     glVertex3f(-25, 25, -25);
     glVertex3f(25, 25, -25);
     glVertex3f(25, 0, -25);
-
-    // valorile pentru peretele din spate sunt setate la -25 pentru a plasa peretele in spatele obiectelor existente in scena
+    // Back wall
     glVertex3f(-25, 0, -25);
     glVertex3f(-25, 0, 25);
     glVertex3f(-25, 25, 25);
     glVertex3f(-25, 25, -25);
-
-    // valorile pentru peretele din stanga sunt setate la -25 pentru a plasa peretele in spatele obiectelor existente in scena
+    // Left wall
     glVertex3f(-25, 0, 25);
     glVertex3f(25, 0, 25);
     glVertex3f(25, 25, 25);
@@ -148,117 +136,93 @@ void Scene::drawWalls()
     glEnd();
 }
 
-/* funcția reshape este apelată automat atunci când fereastra OpenGL este redimensionată. */
+/* The reshape function is called automatically when the OpenGL window is resized. */
 void Scene::reshape(int width, int height) {
-    if (height == 0) height = 1; // Prevenirea împărțirii la zero
+    if (height == 0) height = 1; // Prevents division by zero
     GLfloat aspect = (GLfloat)width / (GLfloat)height;
-    // setează viewportul folosind noile dimensiuni ale ferestrei, ceea ce înseamnă că zona de desenare OpenGL va acoperi întreaga fereastră.
+    // Sets the viewport to cover the new window dimensions
     glViewport(0, 0, width, height);
-    // modul matricei este schimbat în GL_PROJECTION pentru a configura camera de proiecție, iar matricea de proiecție este resetată (glLoadIdentity()). 
+    // Changes the matrix mode to GL_PROJECTION for setting up the projection camera
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-
-    // gluPerspective este folosită pentru a seta camera de perspectivă, cu un unghi de vizualizare de 45 de grade și distanțe de tăiere apropiate și îndepărtate. 
+    // Sets the perspective camera with a 45-degree field of view and near and far clipping distances
     gluPerspective(45.0, aspect, 0.1, 100.0);
-
-    // matrice utilizată pentru a combina matricile de modelare și vizualizare. 
-    // Aceasta controlează modul în care obiectele 3D sunt poziționate, orientate și scalate într-o scenă, precum și poziția și orientarea camerei (sau a punctului de vedere). 
-    // Prin manipularea matricei GL_MODELVIEW, se pot crea efecte de mișcare sau de rotație pentru obiecte și se poate ajusta perspectiva camerei în scena 3D.
+    // Returns to the modelview matrix mode to control object positioning and camera view in the 3D scene
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
 
-/* această metodă este folosită pentru a actualiza poziția bilei pe axa verticală (Y) */
+/* This method is used to update the vertical position (Y-axis) of the ball */
 void Scene::update() {
-    // Actualizarea logicii pentru bouncing ball
+    // Bouncing ball logic update
     if (ball.ballDirection) {
-        ball.ballPositionY += 0.1f; // Deplasare în sus
+        ball.ballPositionY += 0.1f; // Move up
     }
     else {
-        ball.ballPositionY -= 0.1f; // Deplasare în jos
+        ball.ballPositionY -= 0.1f; // Move down
     }
 
-    // Verificăm dacă bila atinge limitele superioară sau inferioară
+    // Check if the ball reaches the upper or lower limits
     if (ball.ballPositionY > ball.heightPlaneOfBall || ball.ballPositionY < 0) {
-        ball.ballDirection = !ball.ballDirection; // Schimbă direcția
+        ball.ballDirection = !ball.ballDirection; // Change direction
     }
 
-    // Redesenează scena
+    // Redraw the scene
     glutPostRedisplay();
 }
 
-/* metoda ce se concentrează pe deplasarea bilei */
+/* This method focuses on the ball's movement. It checks if the ball reaches the top or bottom edge of the screen. If so, it reverses the direction of the ball's movement. */
 void Scene::bouncing_balls() {
-    /* verificam daca mingea atinge marginea de sus sau de jos a ecranului */
+    // Checks if the ball reaches the top or bottom edge of the screen and reverses direction if necessary
     if (ball.widthPlaneOfBall == 0 || ball.widthPlaneOfBall == ball.heightPlaneOfBall) {
-        //se inverseaza valoarea variabilei, iar mingea isi schimba directia
-        ball.ballDirection ^= 1;
+        ball.ballDirection ^= 1; // Toggles the direction
     }
 
-    /* actualizeaza pozitia bilei */
+    // Updates the ball's position
     if (ball.ballDirection) {
-        ball.widthPlaneOfBall += 0.5; // bila se ridica
+        ball.widthPlaneOfBall += 0.5; // The ball moves upwards
     }
     else {
-        ball.widthPlaneOfBall -= 0.5; // bila coboara
+        ball.widthPlaneOfBall -= 0.5; // The ball moves downwards
     }
 
-    glutTimerFunc(30, Scene::timer, 0); // viteza de miscare.
+    // Sets a timer for movement speed
+    glutTimerFunc(30, Scene::timer, 0);
 }
 
-// utilizata pentru a declansa redesenarea ecranului in urmatorul cadru de afisare
+// This method is used to trigger screen redraw in the next display frame
 void Scene::timer(int v) {
-
-    //indica faptul ca ecranul trebuie redesenat in urmatorul cadru de afisare
+    // Indicates that the screen needs to be redrawn in the next frame
     glutPostRedisplay();
 
-    //declanseaza o noua intrerupere de tip timer peste 16 milisecunde
-    //apelare periodica a functiei timer pentru a ne asigura ca ecranul este actualiat la fiecare cadru de afisare, vizual fiind mai placut
+    // Triggers a new timer interrupt after 16 milliseconds to ensure the screen is updated every frame, providing a smoother visual experience
     glutTimerFunc(16, Scene::timer, 0);
 }
 
-//desenrare copac in scena
-void Scene::generateTree(double trunkHeight, double crownHeight, double radius)
-{
+// Drawing a tree in the scene
+void Scene::generateTree(double trunkHeight, double crownHeight, double radius) {
+    // Drawing the trunk
+    glColor3f(0.5, 0.35, 0.05); // Sets the color for drawing the tree trunk to a shade of brown, representing the trunk's color.
+    GLUquadricObj* trunk = gluNewQuadric(); // Creates a new quadric object for drawing cylindrical shapes.
+    gluQuadricDrawStyle(trunk, GLU_FILL); // Sets the drawing style to filled, making the shape solid.
+    gluQuadricNormals(trunk, GLU_SMOOTH); // Sets normals to smooth for realistic lighting.
 
-    // Desenarea trunchiului
-    glColor3f(0.5, 0.35, 0.05);//Setează culoarea pentru desenarea trunchiului copacului. Culoarea aleasă este o nuanță de maro, 
-    //reprezentând culoarea trunchiului unui copac.
+    glPushMatrix(); // Saves the current transformation matrix state.
+    glRotatef(-90, 1.0, 0.0, 0.0); // Rotates the coordinate system to position the cylinder vertically.
+    gluCylinder(trunk, radius / 2, radius / 4, trunkHeight, 20, 20); // Draws the cylinder representing the tree trunk.
 
-    GLUquadricObj* trunk = gluNewQuadric();// Creează un nou obiect quadric, care poate fi folosit pentru a desena forme precum cilindre, sfere.
+    glPopMatrix(); // Restores the previously saved transformation matrix state.
 
-    gluQuadricDrawStyle(trunk, GLU_FILL);//Setează stilul de desenare pentru obiectul quadric trunk la GLU_FILL, 
-    //ceea ce înseamnă că forma va fi umplută, nu doar un schelet.
+    // Drawing the crown
+    glColor3f(0.0, 0.5, 0.0); // Changes color to green for drawing the tree crown, representing foliage.
+    GLUquadricObj* crown = gluNewQuadric(); // Creates a new quadric object for the crown.
+    gluQuadricDrawStyle(crown, GLU_FILL); // Sets the drawing style to filled for the crown.
+    gluQuadricNormals(crown, GLU_SMOOTH); // Sets normals to smooth for the crown.
 
-    gluQuadricNormals(trunk, GLU_SMOOTH);//Setează normalii pentru trunk pentru a fi GLU_SMOOTH, 
-    //asigurându-se că lumina va fi interpolată frumos pe suprafața sa, oferind un aspect mai realist.
+    glPushMatrix(); // Saves the transformation matrix state again.
+    glTranslatef(0, trunkHeight + crownHeight, 0); // Moves the crown to the top of the trunk, adding the trunk's height to the crown's position.
 
-    glPushMatrix();// Salvează starea curentă a matricei de transformare (poziție, rotație, scalare).
+    gluSphere(crown, radius, 20 * 2, 20); // Draws a sphere representing the tree crown.
 
-    glRotatef(-90, 1.0, 0.0, 0.0);//Rotirea sistemului de coordonate cu 90 de grade în jurul axei X pentru a poziționa 
-    //cilindrul vertical, deoarece gluCylinder îl creează pe orizontală implicit.
-
-    gluCylinder(trunk, radius / 2, radius / 4, trunkHeight, 20, 20);//Desenează un cilindru 
-    //care va reprezenta trunchiul copacului. Raza de sus a cilindrului este jumătate din raza de jos pentru a sugera conicitatea trunchiului.
-
-    glPopMatrix();//Restaurează starea matricei de transformare salvată anterior, revenind la starea inițială a sistemului de coordonate.
-
-
-    // Desenarea coroanei
-    glColor3f(0.0, 0.5, 0.0);//Schimbă culoarea pentru desenarea coroanei copacului în verde, reprezentând frunzișul.
-
-    GLUquadricObj* crown = gluNewQuadric();//Creează un nou obiect quadric pentru coroana copacului.
-
-    gluQuadricDrawStyle(crown, GLU_FILL);//Similar cu trunchiul, setează stilul de desenare la umplere pentru coroană.
-
-    gluQuadricNormals(crown, GLU_SMOOTH);//Similar cu trunchiul, setează stilul de desenare normalii la neted pentru coroană.
-    glPushMatrix();//Din nou, salvează starea matricei de transformare.
-
-    glTranslatef(0, trunkHeight + crownHeight, 0);//Translatarea coroanei în susul trunchiului, adăugând înălțimea trunchiului 
-    //la poziția coroanei pentru a o poziționa corect.
-
-    gluSphere(crown, radius, 20 * 2, 20);// Desenează o sferă care va reprezenta coroana copacului. 
-    //Sfera este centrata pe poziția calculată anterior, iar raza sferei este egală cu radius, oferind coroanei dimensiunea dorită.
-
-    glPopMatrix();//Restabilește starea matricei de transformare la cea salvată mai înainte, menținând modificările de poziție doar pentru coroană.
+    glPopMatrix(); // Restores the transformation matrix state, maintaining position changes only for the crown.
 }
